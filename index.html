@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="校园猫猫档案与社区" />
+  <title>校园猫猫档案 · 邻居社区</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Manrope:wght@500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top"><span class="brand-mark">猫</span><span>校园猫猫档案</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#archive">档案</a>
+        <a href="#leaderboard">社区榜单</a>
+        <a class="nav-add" href="#update">＋ 记录猫猫</a>
+      </nav>
+      <span class="topbar-meta"><i></i> CAMPUS CAT COMMUNITY</span>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CAMPUS CAT ARCHIVE / 2026</p>
+          <h1>认识一下，<br /><em>我们的邻居。</em></h1>
+          <p class="hero-intro">记录校园里每一位毛茸茸的常住居民。<br />一张照片，一个名字，就能让社区更完整。</p>
+          <div class="hero-actions"><a class="primary-button" href="#update">加入一位新朋友 <span>↗</span></a><a class="text-link" href="#leaderboard">看看大家最喜欢谁 →</a></div>
+        </div>
+        <div class="hero-stamp"><span>EST.</span><strong>猫猫<br />友好</strong><small>校园版</small></div>
+      </section>
+
+      <section class="stats-strip" aria-label="社区统计">
+        <div><strong id="totalCount">0</strong><span>位居民</span></div>
+        <div><strong id="favoriteTotal">0</strong><span>次收藏</span></div>
+        <div><strong id="femaleCount">0</strong><span>位女生猫猫</span></div>
+        <div><strong id="maleCount">0</strong><span>位男生猫猫</span></div>
+      </section>
+
+      <section id="update" class="update-panel" aria-labelledby="updateTitle">
+        <div class="update-copy"><span class="section-index">01 / UPDATE</span><h2 id="updateTitle">更新档案</h2><p>在校园里遇见一位新朋友？把你知道的信息补充进来，让下一位同学也能找到它。</p><small>本机模式会自动保存；接入 Supabase 后，所有同学都能看到最新档案。</small></div>
+        <form id="catForm" class="cat-form">
+          <label class="photo-upload" for="photoInput"><span id="photoPreview">＋</span><strong>上传照片</strong><small>JPG / PNG · 最大 6MB</small><input id="photoInput" type="file" accept="image/*" /></label>
+          <div class="form-fields">
+            <input type="hidden" name="id" />
+            <label>猫猫名字<input name="name" required placeholder="例如：小橘" /></label>
+            <label>常出没地点<input name="location" required placeholder="例如：教学楼西侧长椅" /></label>
+            <label>猫猫性别<select name="gender"><option value="未知">暂时未知</option><option value="女生猫猫">女生猫猫</option><option value="男生猫猫">男生猫猫</option></select></label>
+            <label>健康状态<select name="status"><option>情况未知 · 待确认</option><option>已绝育 · 已接种疫苗</option><option>已绝育 · 疫苗待补</option><option>未绝育 · 疫苗待补</option></select></label>
+            <label class="full-width">性格关键词<input name="personality" placeholder="例如：亲人、贪吃、爱晒太阳" /></label>
+            <label class="full-width">给同学的话<textarea name="note" rows="2" placeholder="例如：下午常在这里晒太阳。"></textarea></label>
+            <div class="form-actions full-width"><button class="submit-button" type="submit"><span id="submitLabel">加入档案</span> <b>→</b></button><button id="cancelEdit" class="cancel-button hidden" type="button">取消编辑</button><p id="formMessage" class="form-message" role="status"></p></div>
+          </div>
+        </form>
+      </section>
+
+      <section id="archive" class="archive-section">
+        <div class="section-heading"><div><span class="section-index">02 / ARCHIVE</span><h2>档案列表</h2></div><p id="resultCount">共 0 位居民</p></div>
+        <div class="toolbar"><label class="search-box" for="searchInput"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索名字、地点或性格…" autocomplete="off" /><kbd>/</kbd></label><select id="genderFilter" class="filter-select" aria-label="按性别筛选"><option value="all">所有性别</option><option value="女生猫猫">女生猫猫</option><option value="男生猫猫">男生猫猫</option><option value="未知">性别未知</option></select><button id="favoritesToggle" class="filter-button" type="button" aria-pressed="false">♡ 我的收藏 <b id="favoriteCount">0</b></button></div>
+        <div id="catGrid" class="cat-grid" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state hidden"><span>⌁</span><h3>还没有找到这位居民</h3><p>换个名字、地点或关键词试试看。</p></div>
+      </section>
+
+      <section id="leaderboard" class="leaderboard-section">
+        <div class="section-heading"><div><span class="section-index">03 / COMMUNITY</span><h2>猫猫社区榜单</h2></div><p>由同学们的收藏组成</p></div>
+        <div id="leaderboardList" class="leaderboard-list"></div>
+      </section>
+    </main>
+    <footer><span>愿每一只猫都拥有一块晒太阳的地方。</span><span>LOCAL ARCHIVE · READY TO SHARE</span></footer>
+  </div>
+
+  <dialog id="catDialog" class="cat-dialog"><button id="closeDialog" class="dialog-close" type="button" aria-label="关闭详情">×</button><div id="dialogContent"></div></dialog>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
